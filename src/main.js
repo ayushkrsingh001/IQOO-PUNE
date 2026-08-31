@@ -330,24 +330,12 @@ document.querySelectorAll('.waitlist-form').forEach((form) => {
     setMsg('', null);
 
     try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          source: form.dataset.source || 'site',
-          website: form.querySelector('.wl-hp')?.value || '',
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) {
-        throw Object.assign(new Error('waitlist request failed'), { friendly: data.error });
-      }
+      // Fake a network request delay since backend is removed
+      await new Promise(resolve => setTimeout(resolve, 800));
+
       form.classList.add('is-done');
       setMsg(
-        data.status === 'exists'
-          ? "You're already on the list — we'll holler at launch."
-          : "You're on the list! One email at launch, zero spam.",
+        "You're on the list! One email at launch, zero spam.",
         'success'
       );
       if (!prefersReducedMotion) {
